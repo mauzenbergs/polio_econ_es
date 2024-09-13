@@ -5,7 +5,6 @@ require(SimInf)
 library(tidyverse)
 library(dplyr)
 library(data.table)
-
 setwd("/Users/idcvmauz/Dropbox/PolioPreventingOutbreaks/16_EconRisk/polio_siminf/ES")
 
 # Define parameters
@@ -14,7 +13,7 @@ gamma <- 0.125
 r <- beta/gamma
 caseinfection <- 1/200
 I0 <- 0
-reps <- 10 # number of stochastic simulations
+reps <- 10000 # number of stochastic simulations
 pop2 <- 500000
 pop1 <- 1000000-pop2
 ri_coverage <- 0.5
@@ -197,13 +196,13 @@ prepare_events <- function(current_time, sims_with_cases_node1, sims_with_cases_
   return(all_events)
 }
 
-# Initialize lists to store results for each node
+# Initialise lists to store results for each simulation
 model_results_node1 <- list()
 model_results_node2 <- list()
-# Initialize lists to track oSIA events for each node
+# Initialise lists to track oSIA events for each simulation
 all_osias_node1 <- list()
 all_osias_node2 <- list()
-# Initialize empty vectors at the beginning of your main loop
+# Initialise empty vectors at the beginning of your main loop
 selected_sims_node1 <- integer(0)
 selected_sims_node2 <- integer(0)
 
@@ -233,7 +232,7 @@ for (rep in 1:reps) {
     Ccum = c(0, 0)
   )
   
-  # Initialize the model
+  # Initialise the model
   events <- prepare_events(current_time = current_time, sims_with_cases_node1 = selected_sims_node1, sims_with_cases_node2 = selected_sims_node2, importations_df = importations_df, interval = interval)
   model <- create.StocSIRobr0(I0 = I0, beta = beta, gamma = gamma, caseinfection = caseinfection, f_time = interval, initial_state = initial_state, events = events)
   
